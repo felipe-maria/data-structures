@@ -2,47 +2,59 @@ package br.com.fantonio.datastructures.quicksort;
 
 public class Quicksort {
 
-     public void sort(Integer[] array) {
-          this.sort(array, 0, array.length-1);
-     }
+    public void sort(Integer[] array) {
+        this.quickSort(array, 0, array.length - 1);
+    }
 
-     private void sort(Integer[] array, int left, int right) {
+    private void quickSort(Integer[] array, int iLeft, int iRight) {
 
-          int pivot = array[right];
-          right--;
+        if (iRight - iLeft <= 0) {
+            return;
+        } else {
+            int pivot = array[iRight];
+            int partition = partitionFunction(array, iLeft, iRight, pivot);
+            quickSort(array, iLeft, partition - 1);
+            quickSort(array, partition+1, iRight);
+        }
 
-          while (array[left] < pivot) {
-               left++;
-          }
+    }
 
-          while(array[right] > pivot) {
-               right--;
-               if (right == -1) {
-                    right++;
-                    break;
-               }
-          }
 
-          if (right < left) {
-               Integer leftValue = array[left];
-               Integer rightValue = array[right];
+    private int partitionFunction(Integer[] array, int iLeft, int iRight, int pivot) {
 
-               array[left] = rightValue;
-               array[right] = leftValue;
+        int leftPointer = iLeft;
+        int rightPointer = iRight - 1;
 
-//               break;
-          }
+        while (true) {
+            while (array[leftPointer] < pivot) {
+                leftPointer++;
+            }
 
-          if (array[left] > array[right]) {
-               Integer leftValue = array[left];
-               Integer rightValue = array[right];
+            while (rightPointer > 0 && array[rightPointer] > pivot) {
+                rightPointer--;
+            }
 
-               array[left] = rightValue;
-               array[right] = leftValue;
-          }
+            // Right crossed bounds
+            if (leftPointer >= rightPointer) {
+                break;
+            } else {
 
-     }
+                Integer leftValue = array[leftPointer];
+                Integer rightValue = array[rightPointer];
 
+                array[leftPointer] = rightValue;
+                array[rightPointer] = leftValue;
+            }
+        }
+
+        Integer leftValue = array[leftPointer];
+        Integer rightValue = array[iRight];
+
+        array[leftPointer] = rightValue;
+        array[iRight] = leftValue;
+
+        return leftPointer;
+    }
 
 
 }
