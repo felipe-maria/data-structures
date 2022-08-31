@@ -7,8 +7,8 @@ public class SelectionSort {
 
         int pivotPointer = 0;
         int rightBound = array.length-1;
-
-        do {
+        int counter = 0;
+        while (pivotPointer < rightBound) {
 
             int pointer = pivotPointer;
             int lowestValuePointer = pointer;
@@ -20,12 +20,15 @@ public class SelectionSort {
                 }
 
                 pointer++;
+                counter++;
             }
 
             swap(array, pivotPointer, lowestValuePointer);
+            pivotPointer++;
+        }
 
-        } while (pivotPointer++ < rightBound);
-
+        System.out.println("Number of elements (n): " + array.length);
+        System.out.println("Iterations: " + counter);
     }
 
     private void swap(Integer[] array, int pivotPointer, int lowestPosition) {
