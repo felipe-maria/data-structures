@@ -1,41 +1,29 @@
 package br.com.fantonio.datastructures.selectionsort;
 
-public class SelectionSort {
+import java.util.HashMap;
+import java.util.Map;
 
+public class SelectionSort {
 
     public void sort(Integer[] array) {
 
-        int pivotPointer = 0;
-        int rightBound = array.length-1;
-        int counter = 0;
-        while (pivotPointer < rightBound) {
-
-            int pointer = pivotPointer;
-            int lowestValuePointer = pointer;
-
-            while (pointer <= rightBound) {
-
-                if (array[pointer] < array[lowestValuePointer]) {
-                    lowestValuePointer = pointer;
+        for (int i = 0; i < array.length; i++) {
+            int smallPointer = i;
+            for (int j = i; j < array.length; j++) {
+                if (array[smallPointer] > array[j]) {
+                    smallPointer = j;
                 }
-
-                pointer++;
-                counter++;
             }
-
-            swap(array, pivotPointer, lowestValuePointer);
-            pivotPointer++;
+            swap(array, i, smallPointer);
         }
 
-        System.out.println("Number of elements (n): " + array.length);
-        System.out.println("Iterations: " + counter);
     }
 
-    private void swap(Integer[] array, int pivotPointer, int lowestPosition) {
+    private void swap(Integer[] array, int pivotPointer, int smallPointer) {
         int pivotValue = array[pivotPointer];
-        int lowestValue = array[lowestPosition];
+        int lowestValue = array[smallPointer];
 
         array[pivotPointer] = lowestValue;
-        array[lowestPosition] = pivotValue;
+        array[smallPointer] = pivotValue;
     }
 }
