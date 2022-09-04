@@ -1,7 +1,4 @@
-package br.com.fantonio.datastructures.selectionsort;
-
-import java.util.HashMap;
-import java.util.Map;
+package br.com.fantonio.datastructures.sort.selectionsort.selectionsort;
 
 public class SelectionSort {
 

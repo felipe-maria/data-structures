@@ -1,4 +1,4 @@
-package br.com.fantonio.datastructures.quicksort;
+package br.com.fantonio.datastructures.sort.quicksort;
 
 public class Quicksort {
 
