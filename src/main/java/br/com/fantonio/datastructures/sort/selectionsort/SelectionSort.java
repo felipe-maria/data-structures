@@ -1,4 +1,4 @@
-package br.com.fantonio.datastructures.sort.selectionsort.selectionsort;
+package br.com.fantonio.datastructures.sort.selectionsort;
 
 public class SelectionSort {
 
