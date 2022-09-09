@@ -234,5 +234,22 @@ public class Complexity {
         }
     }
 
+    /**
+     * If dentro de for
+     * Complexidade: 23 ou sem saber o n: 4n + 3 (pior caso)
+     */
+    public void exemplo13() {
+        int[] numbers = {1,2,3,4,5,6,7,8};                      // 1
+
+        for (int i = 0; i < numbers.length; i++) {              // 1 + 1 + (n-i) + 1
+                                                                // 2 + (8-0) + 1
+                                                                // 2 + 8 + 1
+                                                                // 11
+            if (numbers[i] % 2 == 0) {                          // 8
+                System.out.println(i);                          // 4
+            }
+        }
+    }
+
 }
 

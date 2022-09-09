@@ -1,12 +1,15 @@
 package br.com.fantonio.datastructures.sort.selectionsort;
 
-public class SelectionSort {
+import br.com.fantonio.datastructures.sort.Sort;
 
+public class SelectionSort implements Sort {
+
+    @Override
     public void sort(Integer[] array) {
 
-        for (int i = 0; i < array.length; i++) {
-            int smallPointer = i;
-            for (int j = i; j < array.length; j++) {
+        for (int i = 0; i < array.length-1; i++) {                            // 1 + 1 + n * (laço interno) + n
+            int smallPointer = i;                                           // 1
+            for (int j = i; j < array.length; j++) {                        // 1 + 1 + (n -1) + n-1
                 if (array[smallPointer] > array[j]) {
                     smallPointer = j;
                 }

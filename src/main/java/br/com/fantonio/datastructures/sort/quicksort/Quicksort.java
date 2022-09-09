@@ -1,7 +1,10 @@
 package br.com.fantonio.datastructures.sort.quicksort;
 
-public class Quicksort {
+import br.com.fantonio.datastructures.sort.Sort;
 
+public class Quicksort implements Sort {
+
+    @Override
     public void sort(Integer[] array) {
 
         this.quickSort(array, 0, array.length - 1);
