@@ -1,7 +1,5 @@
 package br.com.fantonio.datastructures.sort;
 
-import br.com.fantonio.datastructures.sort.Sort;
-
 public class SelectionSort implements Sort {
 
     @Override
