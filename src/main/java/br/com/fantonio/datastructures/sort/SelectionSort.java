@@ -1,4 +1,4 @@
-package br.com.fantonio.datastructures.sort.selectionsort;
+package br.com.fantonio.datastructures.sort;
 
 import br.com.fantonio.datastructures.sort.Sort;
 
