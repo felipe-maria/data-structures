@@ -60,6 +60,15 @@ public abstract class SortBaseTest<T extends Sort> {
     }
 
     @Test
+    public void testWith6() {
+        Integer[] array = {13,2,1,3,8,5};
+
+        this.sortAlgorithm.sort(array);
+
+        assertThat(array, Matchers.arrayContaining(new Integer[] {1,2,3,5,8,13}));
+    }
+
+    @Test
     public void testWith10() {
         Integer[] array = {8, 7, 5, 3, 1, 6, 0, 9, 4 ,2};
 
