@@ -1,7 +1,5 @@
 package br.com.fantonio.datastructures.cs14;
 
-import java.util.Arrays;
-
 public interface Lista<E> {
 
     void adiciona(E element);
