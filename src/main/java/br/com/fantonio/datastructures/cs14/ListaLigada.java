@@ -10,29 +10,24 @@ public class ListaLigada<E> implements Lista<E> {
 
     @Override
     public void adiciona(E element) {
-        if (primeira == null) {
-            Celula celula = new Celula(element);
-            primeira = celula;
-            ultima = celula;
+        if (tamanho == 0) {
+            adicionaNoComeco(element);
         } else {
             Celula novaUltima = new Celula(element);
             ultima.setProxima(novaUltima);
             ultima = novaUltima;
+            tamanho++;
         }
-        tamanho++;
     }
 
-    public void adicionaNoComeco(Object element) {
-        // verifica se é elemento nulo
-        if (element == null) {
-            throw new IllegalArgumentException("Item nulo");
-        }
+    public void adicionaNoComeco(E element) {
         Celula novaPrimeira = new Celula(primeira, element);
         this.primeira = novaPrimeira;
 
         if (tamanho == 0) {
             this.ultima = primeira;
         }
+        tamanho++;
     }
 
     @Override
@@ -41,71 +36,22 @@ public class ListaLigada<E> implements Lista<E> {
         if (posicaoInvalida(posicao)) {
             throw new IllegalArgumentException("Posição inválida!");
         }
-        // verifica se é elemento nulo
-        if (element == null) {
-            throw new IllegalArgumentException("Item nulo");
-        }
         // verifica se é a primeira posicao
         if (posicao == 0) {
-            Celula novaPrimeira = new Celula(primeira, element);
-            this.primeira = novaPrimeira;
-
-            if (tamanho == 0) {
-                this.ultima = primeira;
-            }
+            this.adicionaNoComeco(element);
+        } else if (posicao == tamanho) { // verifica se é a ultima posicao
+            this.adiciona(element);
+        } else { // demais posicoes
+            Celula anterior = this.pegaCelula(posicao - 1);
+            Celula nova = new Celula(anterior.getProxima(), element);
+            anterior.setProxima(nova);
+            tamanho++;
         }
-        // verifica se é a ultima posicao
-        else if (posicao == tamanho) {
-            Celula novaUltima = new Celula(ultima, element);
-            this.ultima = novaUltima;
-        }
-        // demais posicoes
-        else {
-            Celula celulaAtual = primeira;
-            Celula celulaAnterior = null;
-            int indiceAux = 0;
-            while (celulaAtual != null) {
-                if (posicao == indiceAux) {
-                    Celula novaCelula = new Celula(celulaAtual, element);
-                    celulaAnterior.setProxima(novaCelula);
-                    break;
-                }
-                celulaAnterior = celulaAtual;
-                celulaAtual = celulaAtual.getProxima();
-                indiceAux++;
-            }
-        }
-        tamanho++;
     }
 
     @Override
     public Object pega(int posicao) throws IllegalArgumentException {
-        if (posicaoInvalida(posicao)) {
-            throw new IllegalArgumentException("Posicao inválida");
-        }
-        // primeiro
-        if (posicao == 0) {
-            return primeira.getElemento();
-        }
-        // ultimo
-        if (posicao == tamanho - 1) {
-            return ultima.getElemento();
-        }
-
-        // demais
-        Celula proxima = primeira;
-        int indiceAux = 0;
-        Object element = null;
-        while (proxima != null) {
-            if (posicao == indiceAux) {
-                element = proxima.getElemento();
-                break;
-            }
-            proxima = proxima.getProxima();
-            indiceAux++;
-        }
-
-        return element;
+        return this.pegaCelula(posicao).getElemento();
     }
 
     @Override
@@ -132,7 +78,7 @@ public class ListaLigada<E> implements Lista<E> {
         // verifica as demais
         Celula celulaAtual = primeira;
         Celula celulaAnterior = null;
-        int indiceAuxiliar = -1;
+        int indiceAuxiliar = 0;
         while (celulaAtual != null) {
             if (indiceAuxiliar == posicao) {
                 Celula celulaProxima = celulaAtual.getProxima();
@@ -140,7 +86,7 @@ public class ListaLigada<E> implements Lista<E> {
                     celulaAnterior.setProxima(celulaProxima);
                 }
 
-                // verifica se também o ultimo
+                // verifica se é o ultimo
                 if (celulaProxima == null) {
                     ultima = celulaAnterior;
                 }
@@ -157,10 +103,6 @@ public class ListaLigada<E> implements Lista<E> {
 
     @Override
     public void remove(E item) {
-        // verifica se item é nulo
-        if (item == null) {
-            throw new IllegalArgumentException("Item nulo");
-        }
         // verifica se lista vazia
         if (tamanho == 0) {
             return;
@@ -289,15 +231,62 @@ public class ListaLigada<E> implements Lista<E> {
     }
 
     public void removeDoComeco() {
-        // TODO Implement it
+        if (posicaoInvalida(0)) {
+            throw new IllegalArgumentException("Posicao não existe");
+        }
+
+        this.primeira = primeira.getProxima();
+        tamanho--;
+
+        if (tamanho == 1) {
+            ultima = null;
+        }
+
     }
 
     public void removeDoFim() {
-        // TODO Implement it
+        // lista vazia
+        if (tamanho == 0) return;
+
+        // lista com um elemento
+        if (tamanho == 1) {
+            primeira = null;
+            ultima = null;
+            tamanho--;
+
+            return;
+        }
+
+        Celula celulaAtual = primeira;
+        Celula celulaAnterior = null;
+        while (celulaAtual != null) {
+            Celula celulaProxima = celulaAtual.getProxima();
+            if (celulaProxima == null) {
+                celulaAnterior.setProxima(null);
+                ultima = celulaAnterior;
+                tamanho--;
+
+                return;
+            }
+            celulaAnterior = celulaAtual;
+            celulaAtual = celulaAtual.getProxima();
+        }
+
     }
 
     private boolean posicaoInvalida(int posicao) {
         return posicao < 0 || posicao >= this.tamanho;
+    }
+
+    private Celula pegaCelula(int posicao) {
+        if(this.posicaoInvalida(posicao)){
+            throw new IllegalArgumentException("Posição não existe");
+        }
+        Celula atual = primeira;
+        for (int i = 0; i < posicao; i++) {
+            atual = atual.getProxima();
+        }
+        return atual;
     }
 
     private Object[] dobrarTamanhoArray(Object[] elements) {

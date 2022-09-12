@@ -66,8 +66,6 @@ public class Vetor<E> implements Lista<E> {
 
     @Override
     public void remove(E item) {
-        if (item == null) throw new IllegalArgumentException("Item nulo");
-
         for (int i = 0; i < this.tamanho; i++) {
             if (this.items[i].equals(item)) {
                 this.items[i] = null;

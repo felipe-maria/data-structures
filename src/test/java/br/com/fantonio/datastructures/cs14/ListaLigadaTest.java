@@ -17,8 +17,8 @@ public class ListaLigadaTest extends ListaBaseTest<ListaLigada<Aluno>> {
     @Test
     public void adicionaNoComecoTest() {
         ListaLigada<Aluno> lista = new ListaLigada<>();
-        lista.adicionaNoComeco("Rafael");
-        lista.adicionaNoComeco("Paulo");
+        lista.adicionaNoComeco(new Aluno("Rafael"));
+        lista.adicionaNoComeco(new Aluno("Paulo"));
 
         List<String> nomes = super.getNomesFromLista(lista);
 
