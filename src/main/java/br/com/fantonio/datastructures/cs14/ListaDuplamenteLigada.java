@@ -2,8 +2,8 @@ package br.com.fantonio.datastructures.cs14;
 
 public class ListaDuplamenteLigada<E> implements Lista<E> {
 
-    private Celula primeira;
-    private Celula ultima;
+    private CelulaDupla primeira;
+    private CelulaDupla ultima;
 
     private int tamanho = 0;
 
@@ -13,19 +13,23 @@ public class ListaDuplamenteLigada<E> implements Lista<E> {
         if (tamanho == 0) {
             adicionaNoComeco(element);
         } else {
-            Celula novaUltima = new Celula(element);
-            ultima.setProxima(novaUltima);
-            ultima = novaUltima;
+            CelulaDupla nova = new CelulaDupla(element);
+            ultima.setProxima(nova);
+            nova.setAnterior(ultima);
+            ultima = nova;
             tamanho++;
         }
     }
 
     public void adicionaNoComeco(E element) {
-        Celula novaPrimeira = new Celula(primeira, element);
-        this.primeira = novaPrimeira;
-
         if (tamanho == 0) {
-            this.ultima = primeira;
+            CelulaDupla nova = new CelulaDupla(element);
+            this.primeira = nova;
+            this.ultima = nova;
+        } else {
+            CelulaDupla nova = new CelulaDupla(this.primeira, element);
+            this.primeira.setAnterior(nova);
+            this.primeira = nova;
         }
         tamanho++;
     }
@@ -41,10 +45,17 @@ public class ListaDuplamenteLigada<E> implements Lista<E> {
             this.adicionaNoComeco(element);
         } else if (posicao == tamanho) { // verifica se é a ultima posicao
             this.adiciona(element);
-        } else { // demais posicoes
-            Celula anterior = this.pegaCelula(posicao - 1);
-            Celula nova = new Celula(anterior.getProxima(), element);
+        } else { // adiciona no meio
+            CelulaDupla anterior = this.pegaCelula(posicao - 1);
+            CelulaDupla proxima = anterior.getProxima();
+            CelulaDupla nova = new CelulaDupla(element);
+
+            nova.setAnterior(anterior);
+            nova.setProxima(proxima);
+
+            proxima.setAnterior(nova);
             anterior.setProxima(nova);
+
             tamanho++;
         }
     }
@@ -59,46 +70,22 @@ public class ListaDuplamenteLigada<E> implements Lista<E> {
         // verifica se posicao é valida
         if (posicaoInvalida(posicao)) throw new IllegalArgumentException("Posicao inválida");
 
-        // verifica se lista vazia
-        if (tamanho == 0) return;
-
-        // verifica se só tem 1 elemento
-        if (tamanho == 1) {
-            primeira = null;
-            ultima = null;
-            tamanho--;
-            return;
-        }
-
         // verifica se é o primeiro
         if (posicao == 0) {
-            Celula proximaCelula = primeira.getProxima();
-            primeira = proximaCelula;
+            removeDoComeco();
+        } else if (posicao == this.tamanho - 1) {
+            this.removeDoFim();
+        } else {
+            // verifica as demais
+            CelulaDupla anterior = pegaCelula(posicao - 1);
+            CelulaDupla atual = anterior.getProxima();
+            CelulaDupla proxima = atual.getProxima();
+
+            anterior.setProxima(proxima);
+            proxima.setAnterior(anterior);
+
+            tamanho--;
         }
-        // verifica as demais
-        Celula celulaAtual = primeira;
-        Celula celulaAnterior = null;
-        int indiceAuxiliar = 0;
-        while (celulaAtual != null) {
-            if (indiceAuxiliar == posicao) {
-                Celula celulaProxima = celulaAtual.getProxima();
-                if (celulaAnterior != null) { // caso seja a primeira célula
-                    celulaAnterior.setProxima(celulaProxima);
-                }
-
-                // verifica se é o ultimo
-                if (celulaProxima == null) {
-                    ultima = celulaAnterior;
-                }
-                break;
-            }
-
-            celulaAnterior = celulaAtual;
-            celulaAtual = celulaAtual.getProxima();
-            indiceAuxiliar++;
-        }
-
-        tamanho--;
     }
 
     @Override
@@ -119,18 +106,18 @@ public class ListaDuplamenteLigada<E> implements Lista<E> {
 
         // verifica se é o primeiro
         if (item.equals(primeira.getElemento())) {
-            Celula celulaProxima = primeira.getProxima();
+            CelulaDupla celulaProxima = primeira.getProxima();
             primeira = celulaProxima;
             tamanho--;
         }
 
         // verifica as demais
-        Celula celulaAtual = primeira;
-        Celula celulaAnterior = null;
+        CelulaDupla celulaAtual = primeira;
+        CelulaDupla celulaAnterior = null;
         while (celulaAtual != null) {
             Object element = celulaAtual.getElemento();
             if (item.equals(element)) {
-                Celula celulaProxima = celulaAtual.getProxima();
+                CelulaDupla celulaProxima = celulaAtual.getProxima();
                 if (celulaAnterior != null) { // caso seja a primeira célula
                     celulaAnterior.setProxima(celulaProxima);
                 }
@@ -148,20 +135,17 @@ public class ListaDuplamenteLigada<E> implements Lista<E> {
 
     @Override
     public boolean contem(E item) {
-        if (item == null) return false;
+        CelulaDupla atual = primeira;
 
-        Celula proxima = primeira;
-        boolean contem = false;
-        while (proxima != null) {
-            Object element = proxima.getElemento();
-            if (element != null && element.equals(item)) {
-                contem = true;
-                break;
+        while (atual != null) {
+            Object element = atual.getElemento();
+            if (element.equals(item)) {
+                return true;
             }
-            proxima = proxima.getProxima();
+            atual = atual.getProxima();
         }
 
-        return contem;
+        return false;
     }
 
     @Override
@@ -172,7 +156,7 @@ public class ListaDuplamenteLigada<E> implements Lista<E> {
     @Override
     public Object[] toArray() {
         Object[] array = new Object[10];
-        Celula proxima = primeira;
+        CelulaDupla proxima = primeira;
         int indice = -1;
         int tamanho = 0;
         while (proxima != null) {
@@ -198,7 +182,7 @@ public class ListaDuplamenteLigada<E> implements Lista<E> {
         if (o == null) return -1;
         if (tamanho == 0) return -1;
 
-        Celula proxima = primeira;
+        CelulaDupla proxima = primeira;
         int indexAuxiliar = 0;
         int index = -1;
         while (proxima != null) {
@@ -217,7 +201,7 @@ public class ListaDuplamenteLigada<E> implements Lista<E> {
         if (o == null) return -1;
         if (tamanho == 0) return -1;
 
-        Celula proxima = primeira;
+        CelulaDupla proxima = primeira;
         int indexAuxiliar = 0;
         int lastIndex = -1;
         while (proxima != null) {
@@ -246,43 +230,30 @@ public class ListaDuplamenteLigada<E> implements Lista<E> {
 
     public void removeDoFim() {
         // lista vazia
-        if (tamanho == 0) return;
+        if (tamanho == 0) {
+            throw new IllegalArgumentException("Posição não existe");
+        }
 
         // lista com um elemento
         if (tamanho == 1) {
-            primeira = null;
-            ultima = null;
-            tamanho--;
-
-            return;
+            removeDoComeco();
+        } else {
+            CelulaDupla penultima = ultima.getAnterior();
+            penultima.setProxima(null);
+            this.ultima = penultima;
+            this.tamanho--;
         }
-
-        Celula celulaAtual = primeira;
-        Celula celulaAnterior = null;
-        while (celulaAtual != null) {
-            Celula celulaProxima = celulaAtual.getProxima();
-            if (celulaProxima == null) {
-                celulaAnterior.setProxima(null);
-                ultima = celulaAnterior;
-                tamanho--;
-
-                return;
-            }
-            celulaAnterior = celulaAtual;
-            celulaAtual = celulaAtual.getProxima();
-        }
-
     }
 
     private boolean posicaoInvalida(int posicao) {
         return posicao < 0 || posicao >= this.tamanho;
     }
 
-    private Celula pegaCelula(int posicao) {
+    private CelulaDupla pegaCelula(int posicao) {
         if(this.posicaoInvalida(posicao)){
             throw new IllegalArgumentException("Posição não existe");
         }
-        Celula atual = primeira;
+        CelulaDupla atual = primeira;
         for (int i = 0; i < posicao; i++) {
             atual = atual.getProxima();
         }
