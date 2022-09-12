@@ -29,7 +29,7 @@ public abstract class ListaBaseTest<T extends Lista<Aluno>> {
      *
      * @param lista Lista contendo nomes
      */
-    private List<String> getNomesFromLista(Lista<Aluno> lista) {
+    protected List<String> getNomesFromLista(Lista<Aluno> lista) {
         return Arrays.stream(lista.toArray())
                 .filter(Objects::nonNull)
                 .map(o -> (Aluno) o)
@@ -144,6 +144,24 @@ public abstract class ListaBaseTest<T extends Lista<Aluno>> {
         assertThat(nomes.toArray(),
                 Matchers.arrayContaining(new String[]{"Paulo"}));
         assertThat(lista.tamanho(), equalTo(1));
+    }
+
+    @Test
+    public void removePorPosicao2Test() {
+        Aluno rafael = new Aluno("Rafael");
+        Aluno paulo = new Aluno("Paulo");
+        Aluno camila = new Aluno("Camila");
+        Lista<Aluno> lista = implementacao;
+        lista.adiciona(rafael);
+        lista.adiciona(paulo);
+        lista.adiciona(camila);
+        lista.remove(1);
+
+        List<String> nomes = getNomesFromLista(lista);
+
+        assertThat(nomes.toArray(),
+                Matchers.arrayContaining(new String[]{"Rafael", "Camila"}));
+        assertThat(lista.tamanho(), equalTo(2));
     }
 
     @Test
