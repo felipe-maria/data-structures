@@ -69,7 +69,27 @@ public abstract class BaseSearchTest {
     }
 
     /**
-     * Test on N=5
+     * Test on N=4
+     */
+    @Test
+    public void searchInAnArraySize4() {
+        Integer[] numbers = {1,2,3,4};
+
+        assertThat(algorithm.search(numbers, 4), equalTo(3));
+    }
+
+    /**
+     * Test on N=9
+     */
+    @Test
+    public void searchInAnArraySize9() {
+        Integer[] numbers = {1,5,8,9,11,13,15,19,21};
+
+        assertThat(algorithm.search(numbers, 9), equalTo(3));
+    }
+
+    /**
+     * Test on N=10
      */
     @Test
     public void searchInAnArraySize10() {

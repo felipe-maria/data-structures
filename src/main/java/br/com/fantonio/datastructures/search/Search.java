@@ -1,7 +1,7 @@
 package br.com.fantonio.datastructures.search;
 
-public interface Search<E> {
+public interface Search<E extends Comparable<E>> {
 
-    int search(E[] array, E element) throws IllegalArgumentException;
+    int search(E[] elements, E element) throws IllegalArgumentException;
 
 }
