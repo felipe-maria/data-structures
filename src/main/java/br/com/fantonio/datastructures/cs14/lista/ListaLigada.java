@@ -1,4 +1,4 @@
-package br.com.fantonio.datastructures.cs14;
+package br.com.fantonio.datastructures.cs14.lista;
 
 public class ListaLigada<E> implements Lista<E> {
 
