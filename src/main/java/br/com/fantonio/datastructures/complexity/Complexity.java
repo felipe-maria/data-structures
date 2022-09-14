@@ -1,4 +1,4 @@
-package br.com.fantonio.datastructures.main;
+package br.com.fantonio.datastructures.complexity;
 
 import java.util.Scanner;
 
