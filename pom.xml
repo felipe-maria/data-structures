@@ -57,7 +57,7 @@
                             <archive>
                                 <manifest>
                                     <mainClass>
-                                        br.com.fantonio.datastructures.main.Main
+                                        br.com.fantonio.datastructures.complexity.Main
                                     </mainClass>
                                 </manifest>
                             </archive>
