@@ -1,7 +1,6 @@
 package br.com.fantonio.datastructures.cs14.lista;
 
-import br.com.fantonio.datastructures.cs14.lista.Aluno;
-import br.com.fantonio.datastructures.cs14.lista.Lista;
+import br.com.fantonio.datastructures.cs14.dominio.Aluno;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

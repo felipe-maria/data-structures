@@ -1,4 +1,4 @@
-package br.com.fantonio.datastructures.cs14.lista;
+package br.com.fantonio.datastructures.cs14.dominio;
 
 public class Aluno {
 
