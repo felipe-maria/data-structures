@@ -16,9 +16,10 @@ public class PilhaTest {
         Pilha<Peca> pilha = new Pilha<>();
         Peca pecaInsere = new Peca();
         pilha.insere(pecaInsere);
-        pilha.remove();
+        Peca pecaRemovida = pilha.remove();
 
         assertThat(pilha.vazia(), equalTo(true));
+        assertThat(pecaRemovida, equalTo(pecaInsere));
     }
 
     @Test
