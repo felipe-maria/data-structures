@@ -1,6 +1,5 @@
 package br.com.fantonio.datastructures.cs14.pilha;
 
-import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -20,7 +19,7 @@ public class MinotauroTest {
 
         Minotauro minotauro = new Minotauro(mapa);
 
-        int passos = minotauro.melhorCaminho();
+        int passos = minotauro.fugir();
         assertThat(passos, equalTo(1));
     }
 
@@ -33,7 +32,7 @@ public class MinotauroTest {
 
         Minotauro minotauro = new Minotauro(mapa);
 
-        int passos = minotauro.melhorCaminho();
+        int passos = minotauro.fugir();
         assertThat(passos, equalTo(2));
     }
 
@@ -45,22 +44,23 @@ public class MinotauroTest {
         };
 
         Minotauro minotauro = new Minotauro(mapa);
+        int passos = minotauro.fugir();
 
-        Assertions.assertThrows(EmptyStackException.class, () -> minotauro.melhorCaminho());
+        assertThat(passos, equalTo(0));
     }
 
     @Test
     public void mapa4x4_6PassosTest() {
         boolean[][] mapa = {
                 {true, true, true, false},
-                {true, true, true, false},
-                {true, true, false, true},
+                {true, false, true, false},
+                {true, false, false, false},
                 {true, true, true, true}
         };
 
         Minotauro minotauro = new Minotauro(mapa);
 
-        int passos = minotauro.melhorCaminho();
+        int passos = minotauro.fugir();
         assertThat(passos, equalTo(6));
     }
 

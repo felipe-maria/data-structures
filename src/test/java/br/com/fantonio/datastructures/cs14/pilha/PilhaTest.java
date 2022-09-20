@@ -15,23 +15,33 @@ public class PilhaTest {
     public void pilhaVaziaTest() {
         Pilha<Peca> pilha = new Pilha<>();
         Peca pecaInsere = new Peca();
-        pilha.insere(pecaInsere);
-        Peca pecaRemovida = pilha.remove();
+        pilha.push(pecaInsere);
+        Peca pecaRemovida = pilha.pop();
 
-        assertThat(pilha.vazia(), equalTo(true));
+        assertThat(pilha.empty(), equalTo(true));
         assertThat(pecaRemovida, equalTo(pecaInsere));
     }
 
     @Test
     public void pilhaDeAlunoTest() {
         Pilha<String> pilha = new Pilha<String>();
-        pilha.insere("Rafael Cosentino");
-        pilha.insere("Paulo Silvera");
-        String paulo = pilha.remove();
-        String rafael = pilha.remove();
+        pilha.push("Rafael Cosentino");
+        pilha.push("Paulo Silvera");
+        String paulo = pilha.pop();
+        String rafael = pilha.pop();
 
         assertThat(paulo, equalTo("Paulo Silvera"));
         assertThat(rafael, equalTo("Rafael Cosentino"));
+    }
+
+    @Test
+    public void pilhaPeekTest() {
+        Pilha<String> pilha = new Pilha<String>();
+        pilha.push("Paulo Silvera");
+        String paulo = pilha.peek();
+
+        assertThat(paulo, equalTo("Paulo Silvera"));
+        assertThat(pilha.empty(), equalTo(false));
     }
 
 }

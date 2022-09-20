@@ -18,8 +18,8 @@ public class Pilha<E> {
      * Push
      * @param element
      */
-    public void insere(E element) {
-        garantirEspaco();
+    public void push(E element) {
+        assureSpace();
         elements[++index] = element;
         tamanho++;
     }
@@ -29,7 +29,7 @@ public class Pilha<E> {
      * Pop
      * @return
      */
-    public E remove() throws EmptyStackException {
+    public E pop() throws EmptyStackException {
         if (tamanho == 0) {
             throw new EmptyStackException();
         }
@@ -45,20 +45,29 @@ public class Pilha<E> {
      * Empty
      * @return
      */
-    public boolean vazia() {
+    public boolean empty() {
         return tamanho == 0;
     }
 
-    // Search
-    // Peek
+    public int search(E e) {
+        // TODO Not implemented yet
+        return 0;
+    }
 
-    private void garantirEspaco() {
+    public E peek() throws EmptyStackException {
+        if (tamanho == 0) {
+            throw new EmptyStackException();
+        }
+        return elements[index];
+    }
+
+    private void assureSpace() {
         if (elements.length - 1 == index) {
-            dobrarArray();
+            doubleArraySize();
         }
     }
 
-    private void dobrarArray() {
+    private void doubleArraySize() {
         E[] novoArray = (E[]) new Object[tamanho * 2];
 
         for (int i = 0; i < tamanho; i++) {

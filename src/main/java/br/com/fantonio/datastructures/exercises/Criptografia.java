@@ -14,7 +14,7 @@ public class Criptografia {
             if (frase.charAt(i) == ' ') {
                 desempilharTudo();
             } else {
-                pilhaChar.insere(frase.charAt(i));
+                pilhaChar.push(frase.charAt(i));
             }
         }
         desempilharTudo();
@@ -42,8 +42,8 @@ public class Criptografia {
     }
 
     private void desempilharTudo() {
-        while(!pilhaChar.vazia()) {
-            sb.append(pilhaChar.remove());
+        while(!pilhaChar.empty()) {
+            sb.append(pilhaChar.pop());
         }
         sb.append(' ');
     }
