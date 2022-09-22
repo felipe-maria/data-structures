@@ -1,5 +1,6 @@
 package br.com.fantonio.datastructures.cs14.lista;
 
+import br.com.fantonio.datastructures.cs14.dominio.Aluno;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 
