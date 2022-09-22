@@ -64,4 +64,24 @@ public class MinotauroTest {
         assertThat(passos, equalTo(6));
     }
 
+    @Test
+    public void mapa4x4_5PassosTest(){
+        boolean[][] mapa = {
+                {true,true,false,false},
+                {false,true,true,false},
+                {false,false,true,true},
+                {false,false,true,true}
+        };
+
+        Minotauro minotauro = new Minotauro(mapa);
+
+        int passos = minotauro.fugir();
+        assertThat(passos, equalTo(5));
+
+
+    }
+
+
 }
+
+
