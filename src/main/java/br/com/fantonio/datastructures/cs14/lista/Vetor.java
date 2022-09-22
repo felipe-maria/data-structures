@@ -7,31 +7,33 @@ import java.util.Arrays;
  */
 public class Vetor<E> implements Lista<E> {
 
-    private static int valorPadrao = 100;
+    private static final int defaultSize = 100;
+
+    private final ListBasicOperation<E> listOperations = new ListBasicOperation<>();
 
     private int index = -1;
-    private int tamanho = 0;
+    private int size = 0;
 
-    private Object[] items;
+    private E[] items;
 
     public Vetor() {
-        this.items = new Object[valorPadrao];
+        this.items = (E[]) new Object[defaultSize];
     }
 
-    public Vetor(int tamanho) {
-        this.items = new Object[tamanho];
+    public Vetor(int size) {
+        this.items = (E[]) new Object[size];
     }
 
     @Override
     public void adiciona(E item) {
-        this.tamanho++;
+        this.size++;
         garantirEspaco();
         this.items[++this.index] = item;
     }
 
     @Override
     public void adiciona(int posicao, E item) throws IllegalArgumentException {
-        this.tamanho++;
+        this.size++;
         if (!posicaoValida(posicao)) {
             throw new IllegalArgumentException("Posicao inválida");
         }
@@ -46,7 +48,7 @@ public class Vetor<E> implements Lista<E> {
     }
 
     @Override
-    public Object pega(int posicao) throws IllegalArgumentException {
+    public E pega(int posicao) throws IllegalArgumentException {
         if (posicaoValida(posicao)) {
             return this.items[posicao];
         }
@@ -56,17 +58,17 @@ public class Vetor<E> implements Lista<E> {
     @Override
     public void remove(int posicao) {
         this.items[posicao] = null;
-        for (int i = posicao + 1; i < this.tamanho; i++) {
+        for (int i = posicao + 1; i < this.size; i++) {
             this.items[i - 1] = this.items[i];
         }
         this.items[this.index] = null;
         this.index--;
-        this.tamanho--;
+        this.size--;
     }
 
     @Override
     public void remove(E item) {
-        for (int i = 0; i < this.tamanho; i++) {
+        for (int i = 0; i < this.size; i++) {
             if (this.items[i].equals(item)) {
                 this.items[i] = null;
             }
@@ -79,7 +81,7 @@ public class Vetor<E> implements Lista<E> {
         if (item == null) return false;
 
         for (Object o : this.items) {
-            if (o != null && item.equals(o)) {
+            if (item.equals(o)) {
                 return true;
             }
         }
@@ -90,7 +92,7 @@ public class Vetor<E> implements Lista<E> {
     @Override
     public int tamanho() {
 
-        return this.tamanho;
+        return this.size;
     }
 
     @Override
@@ -99,8 +101,8 @@ public class Vetor<E> implements Lista<E> {
     }
 
     @Override
-    public Object[] toArray() {
-        Object[] itemsClone = new Object[this.items.length];
+    public E[] toArray() {
+        E[] itemsClone = (E[]) new Object[this.items.length];
         copiarArray(this.items, itemsClone);
 
         return itemsClone;
@@ -108,17 +110,17 @@ public class Vetor<E> implements Lista<E> {
 
     @Override
     public void limpar() {
-        this.items = new Object[valorPadrao];
+        this.items = (E[]) new Object[defaultSize];
         this.index = -1;
-        this.tamanho = 0;
+        this.size = 0;
     }
 
     @Override
     public int indexOf(E o) {
         if (o == null) return -1;
-        if (tamanho == 0) return -1;
+        if (size == 0) return -1;
 
-        for (int i = 0; i < tamanho; i++) {
+        for (int i = 0; i < size; i++) {
             Object item = items[i];
             if (o.equals(item)) {
                 return i;
@@ -131,9 +133,9 @@ public class Vetor<E> implements Lista<E> {
     @Override
     public int lastIndexOf(Object o) {
         if (o == null) return -1;
-        if (tamanho == 0) return -1;
+        if (size == 0) return -1;
 
-        for (int i = tamanho -1; i >= 0; i--) {
+        for (int i = size -1; i >= 0; i--) {
             Object item = items[i];
             if (o.equals(item)) {
                 return i;
@@ -143,38 +145,33 @@ public class Vetor<E> implements Lista<E> {
         return -1;
     }
 
-    private void copiarArray(Object[] origem, Object[] destino) {
+    private void copiarArray(E[] origem, E[] destino) {
         for (int i = 0; i < origem.length && origem[i] != null; i++) {
             destino[i] = origem[i];
         }
     }
 
-    private void dobrarTamanhoArray() {
-        Object[] novoArray = new Object[items.length * 2];
-        copiarArray(items, novoArray);
-        this.items = novoArray;
-    }
-
     private boolean posicaoValida(int posicao) {
-        return posicao >= 0 && posicao < this.tamanho;
+        return posicao >= 0 && posicao < this.size;
     }
 
     private void garantirEspaco() {
-        if (this.tamanho > this.items.length) {
-            dobrarTamanhoArray();
+        if (this.size > this.items.length) {
+            E[] novoArray = listOperations.dobrarTamanhoArray(items);
+            this.items = novoArray;
         }
     }
 
     private void compactarItems() {
-        Object[] novoArray = new Object[items.length];
+        E[] novoArray = (E[]) new Object[items.length];
 
         this.index = -1;
-        this.tamanho = 0;
+        this.size = 0;
 
         for (int i = 0; i < this.items.length; i++) {
             if (this.items[i] != null) {
                 novoArray[++this.index] = this.items[i];
-                this.tamanho++;
+                this.size++;
             }
         }
         this.items = novoArray;

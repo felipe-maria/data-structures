@@ -1,33 +1,33 @@
 package br.com.fantonio.datastructures.cs14.lista;
 
-public class Celula {
+public class Celula<E> {
 
-    private Celula proxima;
+    private Celula<E> proxima;
 
-    private Object elemento;
+    private E elemento;
 
-    public Celula(Celula proxima, Object elemento) {
+    public Celula(Celula proxima, E elemento) {
         this.proxima = proxima;
         this.elemento = elemento;
     }
 
-    public Celula(Object elemento) {
+    public Celula(E elemento) {
         this.elemento = elemento;
     }
 
-    public Celula getProxima() {
+    public Celula<E> getProxima() {
         return proxima;
     }
 
-    public void setProxima(Celula proxima) {
+    public void setProxima(Celula<E> proxima) {
         this.proxima = proxima;
     }
 
-    public Object getElemento() {
+    public E getElemento() {
         return elemento;
     }
 
-    public void setElemento(Object elemento) {
+    public void setElemento(E elemento) {
         this.elemento = elemento;
     }
 }
