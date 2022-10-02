@@ -7,11 +7,11 @@ public class Fila<E> {
     private ListaDuplamenteLigada<E> lista = new ListaDuplamenteLigada<>();
 
     public void insere(E element) {
-        lista.adicionaNoComeco(element);
+        lista.adiciona(element);
     }
 
     public E remove() {
-        return lista.removeDoFim();
+        return lista.removeDoComeco();
     }
 
     public boolean vazia() {
