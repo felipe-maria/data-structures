@@ -1,12 +1,12 @@
 package br.com.fantonio.datastructures.cs14.lista;
 
-public interface Lista<E> {
+public interface Lista<E extends Object> {
 
     void adiciona(E element);
 
     void adiciona(int posicao, E element) throws IllegalArgumentException;
 
-    Object pega(int posicao) throws IllegalArgumentException;
+    E pega(int posicao) throws IllegalArgumentException;
 
     void remove(int posicao);
 

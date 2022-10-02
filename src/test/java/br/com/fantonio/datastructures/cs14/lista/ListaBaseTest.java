@@ -6,9 +6,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
@@ -31,6 +33,7 @@ public abstract class ListaBaseTest<T extends Lista<Aluno>> {
      * @param lista Lista contendo nomes
      */
     protected List<String> getNomesFromLista(Lista<Aluno> lista) {
+
         return Arrays.stream(lista.toArray())
                 .filter(Objects::nonNull)
                 .map(o -> (Aluno) o)

@@ -1,19 +1,19 @@
 package br.com.fantonio.datastructures.cs14.lista;
 
-public class CelulaDupla {
+public class CelulaDupla<E> {
 
-    private CelulaDupla anterior;
+    private CelulaDupla<E> anterior;
 
-    private CelulaDupla proxima;
+    private CelulaDupla<E> proxima;
 
-    private Object elemento;
+    private E elemento;
 
-    public CelulaDupla(CelulaDupla proxima, Object elemento) {
+    public CelulaDupla(CelulaDupla<E> proxima, E elemento) {
         this.proxima = proxima;
         this.elemento = elemento;
     }
 
-    public CelulaDupla(Object elemento) {
+    public CelulaDupla(E elemento) {
         this.elemento = elemento;
     }
 
@@ -25,19 +25,19 @@ public class CelulaDupla {
         this.proxima = proxima;
     }
 
-    public Object getElemento() {
+    public E getElemento() {
         return elemento;
     }
 
-    public void setElemento(Object elemento) {
+    public void setElemento(E elemento) {
         this.elemento = elemento;
     }
 
-    public CelulaDupla getAnterior() {
+    public CelulaDupla<E> getAnterior() {
         return anterior;
     }
 
-    public void setAnterior(CelulaDupla anterior) {
+    public void setAnterior(CelulaDupla<E> anterior) {
         this.anterior = anterior;
     }
 }
