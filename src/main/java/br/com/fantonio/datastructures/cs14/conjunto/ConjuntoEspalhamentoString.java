@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class ConjuntoEspalhamento implements Conjunto<String> {
+public class ConjuntoEspalhamentoString implements Conjunto<String> {
 
     private int tamanho = 0;
 
     private List<List<String>> tabela = new ArrayList<List<String>>();
 
-    public ConjuntoEspalhamento() {
+    public ConjuntoEspalhamentoString() {
         inicializaTabelaEspalhamento();
     }
 
