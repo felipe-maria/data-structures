@@ -17,6 +17,7 @@ public class ConjuntoEspalhamento implements Conjunto<String> {
     @Override
     public void adiciona(String palavra) {
         if (!this.contem(palavra)){
+            this.verificarCarga();
             List<String> lista = pegaLista(palavra);
             lista.add(palavra);
             tamanho++;
@@ -26,6 +27,7 @@ public class ConjuntoEspalhamento implements Conjunto<String> {
     @Override
     public void remove(String palavra) {
         if (this.contem(palavra)) {
+            this.verificarCarga();
             List<String> lista = pegaLista(palavra);
             lista.remove(palavra);
             tamanho--;
@@ -79,5 +81,30 @@ public class ConjuntoEspalhamento implements Conjunto<String> {
 
         return codigo;
     }
+
+    private void redimensionaTabela(int novaCapacidade) {
+        List<String> palavras = this.pegaTodas();
+        this.tabela.clear();
+        this.tamanho = 0;
+        for (int i = 0; i < novaCapacidade; i++) {
+            this.tabela.add(new LinkedList<>());
+        }
+
+        palavras.forEach(
+                palavra -> this.adiciona(palavra)
+        );
+    }
+
+    private void verificarCarga() {
+        int capacidade = this.tabela.size();
+        double carga = (double) this.tamanho / capacidade;
+
+        if (carga > 0.75) {
+            this.redimensionaTabela(capacidade * 2);
+        } else if (carga < 0.25) {
+            this.redimensionaTabela(Math.max(capacidade / 2, 10));
+        }
+    }
+
 
 }
