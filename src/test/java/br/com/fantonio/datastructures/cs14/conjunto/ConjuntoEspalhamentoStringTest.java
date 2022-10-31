@@ -9,11 +9,11 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.core.IsNot.not;
 
-public class ConjuntoEspalhamentoTest {
+public class ConjuntoEspalhamentoStringTest {
 
     @Test
     public void primeiroTeste() {
-        Conjunto<String> conjunto = new ConjuntoGenerico<>();
+        Conjunto<String> conjunto = new ConjuntoEspalhamentoString();
         conjunto.adiciona("palavra");
         conjunto.adiciona("computador");
         conjunto.adiciona("apostila");
@@ -31,7 +31,7 @@ public class ConjuntoEspalhamentoTest {
 
     @Test
     public void adicionaTest() {
-        Conjunto<String> conjunto = new ConjuntoGenerico<>();
+        ConjuntoEspalhamentoString conjunto = new ConjuntoEspalhamentoString();
         conjunto.adiciona("Rafael");
         conjunto.adiciona("Ana");
         conjunto.adiciona("Paulo");
@@ -42,7 +42,7 @@ public class ConjuntoEspalhamentoTest {
 
     @Test
     public void removeTest() {
-        Conjunto<String> conjunto = new ConjuntoGenerico<>();
+        ConjuntoEspalhamentoString conjunto = new ConjuntoEspalhamentoString();
         conjunto.adiciona("Rafael");
         conjunto.adiciona("Ana");
         conjunto.adiciona("Paulo");
@@ -60,7 +60,7 @@ public class ConjuntoEspalhamentoTest {
 
     @Test
     public void contemTest() {
-        Conjunto<String> conjunto = new ConjuntoGenerico<>();
+        ConjuntoEspalhamentoString conjunto = new ConjuntoEspalhamentoString();
         assertThat("Erro, nome NÂO deve existir.", conjunto.contem("Felipe"), equalTo(false));
 
         conjunto.adiciona("Felipe");
@@ -69,7 +69,7 @@ public class ConjuntoEspalhamentoTest {
 
     @Test
     public void tamanhoTest() {
-        Conjunto<String> conjunto = new ConjuntoGenerico<>();
+        ConjuntoEspalhamentoString conjunto = new ConjuntoEspalhamentoString();
 
         conjunto.adiciona("Felipe");
         assertThat(conjunto.tamanho(), equalTo(1));
