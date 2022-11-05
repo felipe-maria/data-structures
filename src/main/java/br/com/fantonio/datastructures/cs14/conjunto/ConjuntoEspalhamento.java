@@ -4,13 +4,12 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class ConjuntoGenerico<E> implements Conjunto<E> {
+public class ConjuntoEspalhamento<E> implements Conjunto<E> {
 
     private int tamanho = 0;
+    private List<List<E>> table = new ArrayList<>();
 
-    private List<List<E>> table = new ArrayList<List<E>>();
-
-    public ConjuntoGenerico() {
+    public ConjuntoEspalhamento() {
         initHashTable();
     }
 
@@ -68,8 +67,8 @@ public class ConjuntoGenerico<E> implements Conjunto<E> {
         }
     }
 
-    private int calculateTableIndex(E palavra) {
-        int codigoDeEspalhamento = Math.abs(palavra.hashCode());
+    private int calculateTableIndex(E element) {
+        int codigoDeEspalhamento = Math.abs(element.hashCode());
         return codigoDeEspalhamento % this.table.size();
     }
 
