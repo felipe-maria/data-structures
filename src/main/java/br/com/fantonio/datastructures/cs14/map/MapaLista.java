@@ -11,7 +11,7 @@ public class MapaLista<K, V> implements Mapa<K, V> {
 
     @Override
     public void adiciona(K chave, V valor) {
-        if (this.existe(chave)) {
+        if (this.contemChave(chave)) {
             this.remove(chave);
         }
         Associacao<K, V> associacao = new Associacao<>(chave, valor);
@@ -22,24 +22,19 @@ public class MapaLista<K, V> implements Mapa<K, V> {
     @Override
     public V pega(K chave) {
         Associacao<K, V> associacao = this.pegaAssociacao(chave);
-        if (associacao != null) {
-            return associacao.getValue();
-        }
-        return null;
+        return associacao.getValue();
     }
 
 
     @Override
     public void remove(K chave) {
         Associacao<K, V> associacao = this.pegaAssociacao(chave);
-        if (associacao != null) {
-            this.associacoes.remove(associacao);
-            this.tamanho--;
-        }
+        this.associacoes.remove(associacao);
+        this.tamanho--;
     }
 
     @Override
-    public boolean existe(K chave) {
+    public boolean contemChave(K chave) {
         return this.associacoes.stream()
                 .map(Associacao::getKey)
                 .anyMatch(a -> Objects.equals(a,chave));
@@ -55,7 +50,7 @@ public class MapaLista<K, V> implements Mapa<K, V> {
         return this.associacoes.stream()
                 .filter(a -> Objects.equals(a.getKey(), chave))
                 .findAny()
-                .orElse(null);
+                .orElseThrow(() -> new IllegalArgumentException("Chave não existe"));
     }
 
 }
