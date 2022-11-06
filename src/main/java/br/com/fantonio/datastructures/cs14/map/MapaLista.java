@@ -1,8 +1,10 @@
 package br.com.fantonio.datastructures.cs14.map;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class MapaLista<K, V> implements Mapa<K, V> {
 
@@ -43,6 +45,14 @@ public class MapaLista<K, V> implements Mapa<K, V> {
     @Override
     public int quantidade() {
         return this.tamanho;
+    }
+
+    @Override
+    public Collection<V> pegaTodos() {
+
+        return this.associacoes.stream()
+                .map(Associacao::getValue)
+                .collect(Collectors.toList());
     }
 
     private Associacao<K,V> pegaAssociacao(K chave) {

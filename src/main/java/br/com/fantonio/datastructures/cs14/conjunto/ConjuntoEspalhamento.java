@@ -61,7 +61,7 @@ public class ConjuntoEspalhamento<E> implements Conjunto<E> {
     }
 
     private void initHashTable() {
-        for (int i = 0; i < 26; i++) {
+        for (int i = 0; i < 100; i++) {
             List<E> list = new LinkedList<>();
             this.table.add(list);
         }

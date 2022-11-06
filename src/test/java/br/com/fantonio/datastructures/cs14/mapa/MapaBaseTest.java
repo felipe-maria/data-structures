@@ -2,7 +2,7 @@ package br.com.fantonio.datastructures.cs14.mapa;
 
 import br.com.fantonio.datastructures.cs14.map.Carro;
 import br.com.fantonio.datastructures.cs14.map.Mapa;
-import br.com.fantonio.datastructures.cs14.map.MapaLista;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -10,10 +10,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-// TODO ver se é possível checar os elementos depois da inclusão e remoção pois está dando um falso positivo
-/* TODO Verificar se é o possível utilizar o hamcrest para ajudar neste fim, caso não seja, verificar com equals todos
-    os elementos dentro da coleção.
- */
 public abstract class MapaBaseTest<T extends Mapa<String, Carro>> {
 
     private T collection;
@@ -40,9 +36,13 @@ public abstract class MapaBaseTest<T extends Mapa<String, Carro>> {
 
         Carro mattFromMap = mapa.pega("MAT2022");
 
+        assertThat(mapa.pegaTodos(), Matchers.containsInAnyOrder(marquinhos, matt));
+
         assertThat(mattFromMap, equalTo(matt));
         mapa.remove("MAT2022");
+
         assertThat(mapa.quantidade(), equalTo(1));
+        assertThat(mapa.pegaTodos(), Matchers.containsInAnyOrder(marquinhos));
     }
 
 
@@ -52,8 +52,10 @@ public abstract class MapaBaseTest<T extends Mapa<String, Carro>> {
         assertThat(mapa.quantidade(), equalTo(0));
         assertThrows(IllegalArgumentException.class, () -> mapa.pega("BRA2022"));
 
-        mapa.adiciona("BRA2022", new Carro("Relampago Marquinhos"));
+        Carro marquinhos = new Carro("Relampago Marquinhos");
+        mapa.adiciona("BRA2022", marquinhos);
         assertThat(mapa.quantidade(), equalTo(1));
+        assertThat(mapa.pegaTodos(), Matchers.containsInAnyOrder(marquinhos));
 
         assertThrows(IllegalArgumentException.class, () -> mapa.pega("MATT"));
     }
@@ -64,9 +66,10 @@ public abstract class MapaBaseTest<T extends Mapa<String, Carro>> {
         assertThat(mapa.quantidade(), equalTo(0));
         assertThrows(IllegalArgumentException.class, () -> mapa.pega("BRA2022"));
 
-        mapa.adiciona("BRA2022", new Carro("Relampago Marquinhos"));
+        Carro marquinhos = new Carro("Relampago Marquinhos");
+        mapa.adiciona("BRA2022", marquinhos);
         assertThat(mapa.quantidade(), equalTo(1));
-
+        assertThat(mapa.pegaTodos(), Matchers.containsInAnyOrder(marquinhos));
         assertThrows(IllegalArgumentException.class, () -> mapa.pega("Matt"));
     }
 
@@ -74,7 +77,7 @@ public abstract class MapaBaseTest<T extends Mapa<String, Carro>> {
     protected void performanceTest() {
         Mapa<String, Carro> mapa = this.collection;
 
-        int numeroDeElementos = 15000;
+        int numeroDeElementos = 500000;
         long inicio = System.currentTimeMillis();
         for (int i = 0; i < numeroDeElementos; i++) {
             mapa.adiciona("" + i, new Carro("c" + i));

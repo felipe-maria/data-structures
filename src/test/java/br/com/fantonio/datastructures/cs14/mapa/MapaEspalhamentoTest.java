@@ -7,7 +7,7 @@ public class MapaEspalhamentoTest extends MapaBaseTest<MapaEspalhamento<String, 
 
     @Override
     protected MapaEspalhamento<String, Carro> createInstance() {
-        return new MapaEspalhamento<>();
+        return new MapaEspalhamento<>(false);
     }
 
 }
